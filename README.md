@@ -13,6 +13,8 @@ network-name:
 
 After running Compose, run netz to apply the config.
 
+**Note:** Affected containers must have the `NET_ADMIN` capability.
+
 
 **Example**
 
