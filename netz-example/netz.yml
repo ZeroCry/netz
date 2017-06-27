@@ -1,0 +1,5 @@
+netz-example-net-a:
+  ping-one: delay 100ms 100ms loss 10%
+
+netz-example-net-b:
+  ping-one: delay 1000ms loss 50%
