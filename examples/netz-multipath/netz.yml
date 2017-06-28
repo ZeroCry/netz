@@ -1,0 +1,4 @@
+net-a:
+  alice: delay 500ms
+net-b:
+  alice: delay 1500ms

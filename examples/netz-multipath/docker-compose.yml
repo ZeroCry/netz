@@ -1,0 +1,29 @@
+version: "3"
+services:
+  alice:
+    build: .
+    command: send bob-a bob-b
+    cap_add:
+      - NET_ADMIN
+    networks:
+      net-a:
+        aliases:
+          - alice-a
+      net-b:
+        aliases:
+          - alice-b
+  bob:
+    build: .
+    command: receive alice-a alice-b
+    cap_add:
+      - NET_ADMIN
+    networks:
+      net-a:
+        aliases:
+          - bob-a
+      net-b:
+        aliases:
+          - bob-b
+networks:
+  net-a:
+  net-b:
