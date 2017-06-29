@@ -24,6 +24,11 @@ services:
       net-b:
         aliases:
           - bob-b
+  netz:
+    build: ../../netz
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/netz
 networks:
   net-a:
   net-b:

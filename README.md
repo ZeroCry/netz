@@ -11,22 +11,39 @@ network-name:
   container-name: options for netem
 ```
 
-After running Compose, run netz to apply the config.
+Integrate netz into your *docker-compose.yml* like this
 
-**Note:** Affected containers must have the `NET_ADMIN` capability.
+```yml
+# ...
+services:
+  # ...
+  netz:
+    image: pgorczak/netz
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/netz
+#...
+```
 
 
-**Example**
+**Note:** Affected containers must have the `NET_ADMIN` capability and have the
+`tc` tool installed (part of iproute2).
 
-Open two terminals in *netz-example*, then run respectively
+## Examples
 
-    docker-compose up
-    python ../netz.py
+Open a terminal in one of the [example folders](./examples), then run
+`docker-compose up`.
 
+## To do
 
-**TODO**
 * Add other [traffic control][tc] features like rate limiting.
 * Be compatible with possible tc setups on the containers.
+
+
+## Related
+
+* [Pumba: Chaos testing tool for Docker](https://github.com/gaia-adm/pumba)
+* [Blockade](https://github.com/worstcase/blockade)
 
 
 [netem]: https://wiki.linuxfoundation.org/networking/netem

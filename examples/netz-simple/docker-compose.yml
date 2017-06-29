@@ -1,27 +1,32 @@
 version: "3"
 services:
   ping-one:
-    image: alpine:latest
-    command: sh -c "apk add --update iproute2 && tail -f /dev/null"
+    build: .
+    command: tail -f /dev/null
     cap_add:
       - NET_ADMIN
     networks:
       - netz-example-net-a
       - netz-example-net-b
   ping-two:
-    image: alpine:latest
-    command: sh -c "apk add --update iproute2 && ping ping-one"
+    build: .
+    command: ping ping-one
     cap_add:
       - NET_ADMIN
     networks:
       - netz-example-net-a
   ping-three:
-    image: alpine:latest
-    command: sh -c "apk add --update iproute2 && ping ping-one"
+    build: .
+    command: ping ping-one
     cap_add:
       - NET_ADMIN
     networks:
       - netz-example-net-b
+  netz:
+    build: ../../netz
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/netz
 networks:
   netz-example-net-a:
   netz-example-net-b:

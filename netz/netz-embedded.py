@@ -1,7 +1,5 @@
-import inspect
-from itertools import dropwhile, islice
 import logging
-import sys
+import socket
 
 import docker
 import yaml
@@ -12,19 +10,14 @@ logging.basicConfig(level=logging.INFO)
 log = logging.getLogger()
 
 
-def compose_project():
-    import compose.cli.main as compose_main
-    from compose.cli.command import project_from_options
-    from docopt import docopt
-
-    # Forward all args after "--".
-    forwards = list(islice(dropwhile(lambda x: x != '--', sys.argv), 1, None))
-    # Parse into a Docker Compose project.
-    compose_opts = docopt(
-        inspect.getdoc(compose_main.TopLevelCommand),
-        argv=forwards,
-        help=False)
-    return project_from_options('.', compose_opts)
+def compose_name():
+    """ HACK getting the compose project this container belongs to. """
+    me = socket.gethostname()
+    for c in client.containers.list():
+        if c.id.startswith(me):
+            return c.labels.get('com.docker.compose.project')
+    raise RuntimeError(
+        'Netz container could not find itself on the Docker API.')
 
 
 def project_containers(project):
@@ -66,7 +59,7 @@ if __name__ == '__main__':
     with open('netz.yml') as f:
         config = yaml.safe_load(f.read())
 
-    name = compose_project().name
+    name = compose_name()
     log.info('Using project name "{}".'.format(name))
 
     # name->instance for all networks in the Compose project.
