@@ -1,2 +1,2 @@
-net:
+default:
   alice: loss 95%

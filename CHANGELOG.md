@@ -8,6 +8,7 @@ project **does not** adhere to Semantic Versioning.
 ### Added
 - This CHANGELOG
 - Integration with Docker Compose
+- Coding example
 
 ### Removed
 - Ability to run outside Docker Compose
