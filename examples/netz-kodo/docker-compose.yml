@@ -1,0 +1,23 @@
+version: "3"
+services:
+  alice:
+    build: .
+    command: send bob
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - net
+  bob:
+    build: .
+    command: receive
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - net
+  netz:
+    build: ../../netz
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/netz
+networks:
+  net:
