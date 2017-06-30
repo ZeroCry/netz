@@ -28,7 +28,6 @@ services:
 #...
 ```
 
-
 **Note:** Affected containers must have the `NET_ADMIN` capability and have the
 `tc` tool installed (part of iproute2).
 
@@ -36,13 +35,6 @@ services:
 
 Open a terminal in one of the [example folders](./examples), then run
 `docker-compose up`.
-
-## To do
-
-* Apply rate to network instead of each container (shared bandwidth).
-* Get rid of requirements for containers (run on host like Blockade).
-* Be compatible with possible tc setups on the containers?
-
 
 ## Traffic control
 
