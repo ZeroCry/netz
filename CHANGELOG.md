@@ -9,6 +9,10 @@ project **does not** adhere to Semantic Versioning.
 - This CHANGELOG
 - Integration with Docker Compose
 - Coding example
+- Rate limiting
+
+### Changed
+- Config file format
 
 ### Removed
 - Ability to run outside Docker Compose

@@ -1,0 +1,17 @@
+version: "3"
+services:
+  alice:
+    build: .
+    command: iperf -f K -s
+    cap_add:
+      - NET_ADMIN
+  bob:
+    build: .
+    command: sh -c "sleep 2s && iperf -f K -c alice"
+    cap_add:
+      - NET_ADMIN
+  netz:
+    build: ../../netz
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/netz
