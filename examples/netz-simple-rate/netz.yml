@@ -1,4 +1,4 @@
 default:
-  # Bob is the one who downloads
+  # Bob is the one who uploads
   bob:
     htb: rate 500kbps
