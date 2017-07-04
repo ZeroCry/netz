@@ -6,6 +6,8 @@ import sys
 import docker
 import yaml
 
+import ip_utils
+
 client = docker.from_env()
 
 logging.basicConfig(level=logging.INFO)
@@ -13,7 +15,7 @@ log = logging.getLogger('netz')
 
 
 def compose_name():
-    """ HACK getting the compose project this container belongs to. """
+    """ HACK (?) getting the compose project this container belongs to. """
     me = socket.gethostname()
     for c in client.containers.list():
         if c.id.startswith(me):
@@ -37,15 +39,11 @@ def project_networks(project):
 
 def interface_in_net(c, n):
     """ Get interface at which container c is attached to network n. """
-    # Container MAC address in network.
-    mac = n.attrs['Containers'][c.id]['MacAddress']
-    # List of all network interfaces on the container.
-    devices = c.exec_run(['ls', '-1', '/sys/class/net']).decode()
-    # List of their MAC addresses.
-    addrs = c.exec_run(['sh', '-c', 'cat /sys/class/net/*/address']).decode()
-    # Build MAC->interface dict and get the interface we're looking for.
-    addr_to_dev = dict(zip(addrs.splitlines(), devices.splitlines()))
-    return addr_to_dev[mac]
+    # Container IP address in network.
+    ip = n.attrs['Containers'][c.id]['IPv4Address']
+    # Build ip->interface dict and get the interface we're looking for.
+    ip_to_name = ip_utils.ipv4_to_name(raising_exec(c, 'ip address').decode())
+    return ip_to_name[ip]
 
 
 def raising_exec(c, cmd):
