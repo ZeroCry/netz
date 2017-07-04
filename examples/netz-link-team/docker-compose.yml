@@ -1,0 +1,26 @@
+version: "3"
+services:
+  alice:
+    build: .
+    command: 192.168.0.2 192.168.0.3 server
+    cap_add:
+      - NET_ADMIN
+    networks:
+      net-a:
+      net-b:
+  bob:
+    build: .
+    command: 192.168.0.3 192.168.0.2 client
+    cap_add:
+      - NET_ADMIN
+    networks:
+      net-a:
+      net-b:
+  netz:
+    build: ../../netz
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/netz
+networks:
+  net-a:
+  net-b:

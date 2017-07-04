@@ -1,0 +1,6 @@
+net-a:
+  bob:
+    htb: rate 500kbps
+net-b:
+  bob:
+    htb: rate 500kbps

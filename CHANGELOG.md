@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com) and this
 project **does not** adhere to Semantic Versioning.
 
-## ~~[Unreleased]~~
+## [Unreleased]
+### Added
+- Link aggregation example
 
 ## [17.6.1] - 2017-06-30
 ### Added
